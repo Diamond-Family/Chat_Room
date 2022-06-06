@@ -87,8 +87,10 @@ public class Client
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter your username group Chat: ");
         String username = scanner.nextLine();
+        System.out.print("Enter port number for peer2peer connection: ");
+        int port_no = scanner.nextInt();
         System.out.println("-------------------------------------\n");
-        Socket socket = new Socket("localhost", 1802);
+        Socket socket = new Socket("localhost", port_no);
         Client client = new Client( socket , username );
         client.listenToMessage();
         client.sendMessage();
