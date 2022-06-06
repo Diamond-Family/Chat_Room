@@ -70,4 +70,40 @@ class ClientHandler implements Runnable {
         }
 
     }
+    @Override
+    public void run()
+    {
+        String messageFromClient;
+        while(socket.isConnected())
+        {
+            try{
+                messageFromClient = bufferedreader.readLine();
+                broadcastMessage(messageFromClient);
+            }catch(IOException e)
+            {
+                closeEverything(socket ,bufferedreader, bufferedwriter);
+                break;
+            }
+        }
+    }
+
+    public void broadcastMessage(String messageToSend)
+    {
+        for(ClientHandler clientHandler : clientHandler )
+        {
+            try{
+                if(!clientHandler.clientUserName.equals(clientUserName))
+                {
+                    clientHandler.bufferedwriter.write(messageToSend);
+                    clientHandler.bufferedwriter.newLine();
+                    clientHandler.bufferedwriter.flush();
+                }
+            }catch(IOException e)
+            {
+                closeEverything(socket , bufferedreader , bufferedwriter );
+            }
+        }
+    }
+
+}
    
