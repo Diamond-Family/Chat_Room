@@ -46,3 +46,28 @@ public class Server
         server.StartServer();
     }
 }
+
+class ClientHandler implements Runnable {
+    public static ArrayList<ClientHandler> clientHandler = new ArrayList<>();
+    private Socket socket;
+    private BufferedReader bufferedreader;
+    private BufferedWriter bufferedwriter;
+    private String clientUserName;
+    public String UserName;
+    public ClientHandler(Socket socket)
+    {
+        try{
+            this.socket = socket;
+            this.bufferedwriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            this.bufferedreader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.clientUserName = bufferedreader.readLine();
+            clientHandler.add(this);
+            broadcastMessage("\n-----------------------------\nSERVER has Added ["+clientUserName+"] User \n-----------------------------");            //Send message to group of Chat
+            this.UserName = clientUserName;
+        }catch (IOException e)
+        {
+            closeEverything(socket, bufferedreader , bufferedwriter);
+        }
+
+    }
+   
