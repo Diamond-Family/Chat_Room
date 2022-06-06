@@ -46,7 +46,6 @@ public class Server
         server.StartServer();
     }
 }
-
 class ClientHandler implements Runnable {
     public static ArrayList<ClientHandler> clientHandler = new ArrayList<>();
     private Socket socket;
@@ -70,6 +69,8 @@ class ClientHandler implements Runnable {
         }
 
     }
+
+}
     @Override
     public void run()
     {
@@ -106,4 +107,3 @@ class ClientHandler implements Runnable {
     }
 
 }
-   
